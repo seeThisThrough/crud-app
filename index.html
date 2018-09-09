@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <style src="style.css"></style>
+    
+<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA23cQ3YJ1qPHOhdssLz7qRzc0io2SGX_8",
+    authDomain: "my-crud-app-ed8fc.firebaseapp.com",
+    databaseURL: "https://my-crud-app-ed8fc.firebaseio.com",
+    projectId: "my-crud-app-ed8fc",
+    storageBucket: "my-crud-app-ed8fc.appspot.com",
+    messagingSenderId: "57786731715"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="app.js"></script>
+</head>
+
+<body>
+<h1> My awesome CRUD app!</h1>
+<input id="text-title" placeholder="Title">
+
+<div>    
+<textarea id="text-body" placeholder="Body"></textarea>
+<div>    
+
+<section>
+  <button id="submit-form" onclick="writeData()">submit</button>
+  <button id="delete-form" onclick="">delete</button>
+  <button id="edit-form" onclick="">edit</button>
+</section>
+
+<div id='placeholder'></div>
+  </body>
+</html>
