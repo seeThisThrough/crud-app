@@ -5,6 +5,7 @@
 // Get a reference to the database service
 var database = firebase.database();
 
+var blogs = [];
 //submit
 //document.getElementById("text-body").onclick = function
 
@@ -14,13 +15,17 @@ post.on('value', function(snapshot) {
   //console.log(snapshot.val());
   removePosts()
   if(snapshot.val()){
-  Object.values(snapshot.val()).forEach(updateBlog)
+  Object.values(snapshot.val()).forEach(blogPost)
  }
 });
 
 var title = document.getElementById('post-title');
 
 var body = document.getElementById('post-body');
+
+//create userId
+
+
 
 //writeUserData
 function writeData() {
@@ -31,22 +36,46 @@ function writeData() {
 }
 
 //readUserData
-function updateBlog(post) {
- console.log(post.title, post.body) 
+function blogPost(post) {
+ //console.log(post.title, post.body) 
 
  var placeholder = document.getElementById('placeholder');
  
  var newTitle = document.createElement('h2');
+
    newTitle.appendChild(document.createTextNode(post.title));
 
- //var newBody = document.createElement('p');
-   //newBody.appendChild(document.createTextNode(post.body));
+ var newBody = document.createElement('p');
+
+   newBody.append(document.createTextNode(post.body));
+ 
+ var editBtn = document.createElement('button');
+
+ var eText = document.createTextNode('edit');
+
+ editBtn.appendChild(eText);
+ editBtn.setAttribute('id', 'edit-button')
+
+ var deleteBtn = document.createElement('button');
+
+ var dText = document.createTextNode('delete');
+
+ deleteBtn.appendChild(dText);
+ deleteBtn.setAttribute('id', 'delete-button')
+
+/*
+var btn = document.createElement("BUTTON");        // Create a <button> element
+var t = document.createTextNode("CLICK ME");       // Create a text node
+btn.appendChild(t);                                // Append the text to <button>
+*/
 
    placeholder.append(newTitle);
-   //placeholder.append(newBody);
-  
+   placeholder.append(newBody);
+   placeholder.append(editBtn)
+   placeholder.append(deleteBtn)
 }
 
+//helper function of readUserData
 function removePosts() {
   var myNode = document.getElementById("placeholder");
   while (myNode.firstChild) {
@@ -55,5 +84,8 @@ function removePosts() {
 }
 
 
-
+//Delete Posts
+function deletePost() {
+  console.log(this)
+}
 
