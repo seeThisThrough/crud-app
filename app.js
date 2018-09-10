@@ -56,6 +56,7 @@ function blogPost(post) {
  editBtn.appendChild(eText);
  editBtn.setAttribute('id', 'edit-button')
 
+
  var deleteBtn = document.createElement('button');
 
  var dText = document.createTextNode('delete');
@@ -63,17 +64,15 @@ function blogPost(post) {
  deleteBtn.appendChild(dText);
  deleteBtn.setAttribute('id', 'delete-button')
 
-/*
-var btn = document.createElement("BUTTON");        // Create a <button> element
-var t = document.createTextNode("CLICK ME");       // Create a text node
-btn.appendChild(t);                                // Append the text to <button>
-*/
-
    placeholder.append(newTitle);
    placeholder.append(newBody);
    placeholder.append(editBtn)
    placeholder.append(deleteBtn)
+
+document.getElementById("edit-button").addEventListener("click", function(){console.log(this); });
+document.getElementById("delete-button").addEventListener("click", function(){console.log(this);});   
 }
+
 
 //helper function of readUserData
 function removePosts() {
@@ -86,6 +85,5 @@ function removePosts() {
 
 //Delete Posts
 function deletePost() {
-  console.log(this)
 }
 
