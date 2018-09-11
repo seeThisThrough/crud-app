@@ -37,7 +37,7 @@ function writeData() {
 
 //readUserData
 function blogPost(post) {
- //console.log(post.title, post.body) 
+
 
  var placeholder = document.getElementById('placeholder');
  
@@ -54,7 +54,8 @@ function blogPost(post) {
  var eText = document.createTextNode('edit');
 
  editBtn.appendChild(eText);
- editBtn.setAttribute('id', 'edit-button')
+ editBtn.setAttribute('id', 'edit-button');
+ editBtn.addEventListener("click", function(){console.log("this is the edit button for: ", post.title)});
 
 
  var deleteBtn = document.createElement('button');
@@ -62,15 +63,13 @@ function blogPost(post) {
  var dText = document.createTextNode('delete');
 
  deleteBtn.appendChild(dText);
- deleteBtn.setAttribute('id', 'delete-button')
+ deleteBtn.setAttribute('id', 'delete-button');
+ deleteBtn.addEventListener("click", function(){console.log("this is the delete button for:", post.title)})
 
    placeholder.append(newTitle);
    placeholder.append(newBody);
    placeholder.append(editBtn)
-   placeholder.append(deleteBtn)
-
-document.getElementById("edit-button").addEventListener("click", function(){console.log(this); });
-document.getElementById("delete-button").addEventListener("click", function(){console.log(this);});   
+   placeholder.append(deleteBtn) 
 }
 
 
@@ -86,4 +85,6 @@ function removePosts() {
 //Delete Posts
 function deletePost() {
 }
+
+
 
