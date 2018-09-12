@@ -7,16 +7,29 @@ var database = firebase.database();
 
 var blogs = [];
 
-var post = firebase.database().ref('users/');
+var editPostData;
+
+var editId;
+
+var isEditing = false;
+
+var fireBasePost = firebase.database().ref('users/');
 //console.log(post.key)
 
 //database method which fetches data on update
-post.on('value', function(snapshot) {
+fireBasePost.on('value', function(snapshot) {
   //console.log(snapshot.val());
   removePosts()
-  if(snapshot.val()){
-  Object.values(snapshot.val()).forEach(blogPost)
- }
+  var data = snapshot.val();
+  for (var postId in data) {
+    var post = data[postId];
+    //console.log(data)
+    //console.log(postId + '    ' + data[postId].title);
+    blogPost(postId, post);
+  }
+  // if(snapshot.val()){
+  //   Object.values(snapshot.val()).forEach(blogPost)
+  // }
 });
 
 var title = document.getElementById('post-title');
@@ -31,8 +44,25 @@ function writeData() {
   });
 }
 
+function onSubmit() {
+  if(isEditing) {
+   updateData(editId, editPostData);
+   isEditing = false;
+  }else {
+    writeData();
+  }
+}
+
+function updateData(postId, post) {
+  firebase.database().ref('users/' + postId).set({
+    title: document.getElementById('text-title').value,
+    body: document.getElementById('text-body').value
+  });
+}
+
 //readUserData
-function blogPost(post) {
+function blogPost(postId, post) {
+  console.log(post)
   var placeholder = document.getElementById('placeholder');
  
   var newTitle = document.createElement('h2');
@@ -49,7 +79,7 @@ function blogPost(post) {
 
   editBtn.appendChild(eText);
   editBtn.setAttribute('id', 'edit-button');
-  editBtn.addEventListener("click", function(){editPost(post)});
+  editBtn.addEventListener("click", function(){editPost(postId, post)});
 
   var deleteBtn = document.createElement('button');
 
@@ -57,7 +87,7 @@ function blogPost(post) {
 
   deleteBtn.appendChild(dText);
   deleteBtn.setAttribute('id', 'delete-button');
-  deleteBtn.addEventListener("click", function(){deletePost(post)})// not working
+  deleteBtn.addEventListener("click", function(){deletePost(postId, post)})// not working
 
   placeholder.append(newTitle);
   placeholder.append(newBody);
@@ -75,18 +105,30 @@ function removePosts() {
 
 
 //Delete Posts
-function deletePost(post) {
+function deletePost(postId, post) {
   //firebase.database().ref('users/').update(title, body);
-  console.log(post)
-  console.log("delete function press successful on ", post.title, "and body ", post.body)
-
+  //console.log(postId, post)
+  //console.log("delete function press successful on ", post.title, "and body ", post.body)
+  firebase.database().ref('users/' + postId).remove();
 }
 
 
-function editPost(post) {
-  console.log(post)
-  console.log("edit function press successful on ", post.title, "and body ", post.body)
+function editPost(postId, post) {
+  //edit mode
+  isEditing = true;
+  editPostData = post
+  editId = postId;
+
+  //console.log(postId, post)
+  //console.log("edit function press successful on ", post.title, "and body ", post.body)
+  document.getElementById('text-title').value = post.title;
+  document.getElementById('text-body').value = post.body;
+  // post.title = document.getElementById('text-title').value;
+  // post.body = document.getElementById('text-body').value;
+  // updateData(postId, post);
+  window.scrollTo(0, 0);
 }
+
 
 // function writeNewPost(uid, username, picture, title, body) {
 //   // A post entry.
@@ -109,4 +151,5 @@ function editPost(post) {
 
 //   return firebase.database().ref().update(updates);
 // }
+
 
